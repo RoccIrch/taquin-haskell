@@ -52,14 +52,16 @@ distManhattan (x1,x2) (y1,y2)
 s :: State
 s = [(2,3), (1,2), (1,1), (3,1), (3,2), (3,3), (2,2), (1,3), (2,1)]
 
--- h1 :: State -> Int 
--- h1 ((x1,x2): xs) = distHamming(x1,x2)(ef) + h1 xs
+h1 :: State -> Int
+h1 (s:ss) = aux (s:ss) 0
+      where aux [] _ = 0
+            aux (s:ss) n = distManhattan s (posTile n ef) + aux ss (n+1)
 
 
---h2 :: State -> Int 
---h2 ((x1,x2): xs) 
---    | 
---    |otherwise = 1 + h1 xs
+h2 :: State -> Int
+h2 (s:ss) = aux (s:ss) 0
+      where aux [] _ = 0
+            aux (s:ss) n = distHamming s (posTile n ef) + aux ss (n+1)
 
 
 successeurs :: State -> [State]
